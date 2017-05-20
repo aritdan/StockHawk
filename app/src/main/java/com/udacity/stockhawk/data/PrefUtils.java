@@ -10,6 +10,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import timber.log.Timber;
+
 public final class PrefUtils {
 
     private PrefUtils() {
@@ -86,6 +88,48 @@ public final class PrefUtils {
         }
 
         editor.apply();
+    }
+
+    public static void addSymbolForWidgetId(final int widgetId, final String symbol,
+                                            final Context context) {
+        Timber.d("ENTER addSymbolForWidgetId() widgetId=[%s], symbol=[%s]", widgetId, symbol);
+
+        final String prefKey = context.getString(R.string.pref_widget_symbol_key) +
+                String.valueOf(widgetId);
+        Timber.d("prefKey=[%s]", prefKey);
+
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        sharedPreferences.edit().putString(prefKey, symbol).apply();
+
+        Timber.d("EXIT addSymbolForWidgetId()");
+    }
+
+
+    public static String getSymbolForWidgetId(final int widgetId, final Context context) {
+        Timber.d("ENTER getSymbolForWidgetId() widgetId=[%s]", widgetId);
+
+        final String prefKey = context.getString(R.string.pref_widget_symbol_key) +
+                String.valueOf(widgetId);
+        Timber.d("prefKey=[%s]", prefKey);
+
+
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        final String symbol = sharedPreferences.getString(prefKey, "");
+
+        Timber.d("EXIT getSymbolForWidgetId() symbol=[%s]", symbol);
+        return symbol;
+    }
+
+    public static void removeWidgetIdBySymbol(final String symbol, final int[] widgetIds,
+                                              final Context context) {
+        final SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        for (final int widgetId : widgetIds) {
+            final String prefKey = context.getString(R.string.pref_widget_symbol_key) + String.valueOf(widgetId);
+            final String symbolForWidgetId = pref.getString(prefKey, null);
+            if (symbolForWidgetId != null && symbolForWidgetId.equals(symbol)) {
+                pref.edit().remove(prefKey).apply();
+            }
+        }
     }
 
 }

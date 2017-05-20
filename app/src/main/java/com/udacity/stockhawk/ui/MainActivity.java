@@ -1,6 +1,9 @@
 package com.udacity.stockhawk.ui;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -23,6 +26,7 @@ import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
 import com.udacity.stockhawk.sync.QuoteSyncJob;
+import com.udacity.stockhawk.widget.StockWidgetProvider;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,7 +50,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onClick(String symbol) {
+
         Timber.d("Symbol clicked: %s", symbol);
+        final Intent intent = new Intent(this, HistoryActivity.class);
+        intent.putExtra(Contract.Quote.COLUMN_SYMBOL, symbol);
+        startActivity(intent);
+
     }
 
     @Override
@@ -77,6 +86,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 String symbol = adapter.getSymbolAtPosition(viewHolder.getAdapterPosition());
                 PrefUtils.removeStock(MainActivity.this, symbol);
+
+                final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(getApplicationContext());
+                final ComponentName stockWidgetComponentName = new ComponentName(getApplicationContext(), StockWidgetProvider.class);
+                final int[] widgetIds = appWidgetManager.getAppWidgetIds(stockWidgetComponentName);
+                PrefUtils.removeWidgetIdBySymbol(symbol, widgetIds, MainActivity.this);
+
                 getContentResolver().delete(Contract.Quote.makeUriForStock(symbol), null, null);
             }
         }).attachToRecyclerView(stockRecyclerView);

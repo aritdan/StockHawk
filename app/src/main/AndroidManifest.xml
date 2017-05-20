@@ -23,6 +23,12 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ui.HistoryActivity"
+            android:parentActivityName=".ui.MainActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.MainActivity" />
+        </activity>
+
         <service
             android:name=".sync.QuoteIntentService"
             android:exported="false" />
@@ -37,6 +43,25 @@
             android:enabled="true"
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <receiver android:name=".widget.StockWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/stock_widget_info"/>
+        </receiver>
+
+        <service android:name=".widget.UpdateWidgetIntentService"></service>
+
+        <activity android:name=".widget.StockWidgetConfigurationActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>
