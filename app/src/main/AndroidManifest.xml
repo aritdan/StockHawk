@@ -36,7 +36,7 @@
         <provider
             android:name=".data.StockProvider"
             android:authorities="com.udacity.stockhawk"
-            android:exported="false" />
+            android:exported="true" />
 
         <service
             android:name=".sync.QuoteJobService"
@@ -61,6 +61,10 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
+
+        <service android:name=".widget.StockRemoteViewsService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+
 
     </application>
 

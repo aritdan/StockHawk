@@ -1,23 +1,18 @@
 package com.udacity.stockhawk.ui;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
 import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.history.HistoryAdapter;
 import com.udacity.stockhawk.history.StockHistoryLoaderCallbacks;
-import com.udacity.stockhawk.history.pojo.HistoryItem;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,8 +26,17 @@ public class HistoryActivity extends AppCompatActivity {
 
     private static final int LOADER_HISTORY = 10;
 
+    @BindView(R.id.tv_hist_title)
+    protected TextView titleTextView;
+
     @BindView(R.id.rv_stock_history)
     protected RecyclerView historyRecyclerView;
+
+    @BindView(R.id.lc_history)
+    protected LineChart historyLineChart;
+
+    @BindView(R.id.history_error)
+    protected TextView errorTextView;
 
     public HistoryActivity() {
         super();
@@ -47,9 +51,19 @@ public class HistoryActivity extends AppCompatActivity {
 
         final String stockName = getIntent().getStringExtra(Contract.Quote.COLUMN_SYMBOL);
 
+        titleTextView.setText(stockName);
+
         final HistoryAdapter historyAdapter = new HistoryAdapter();
         historyRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         historyRecyclerView.setAdapter(historyAdapter);
+
+        historyLineChart.getAxisLeft().setTextColor(getResources().getColor(android.R.color.white));
+        historyLineChart.getAxisLeft().setTextSize(15f);
+        historyLineChart.getXAxis().setTextColor(getResources().getColor(android.R.color.white));
+        historyLineChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        historyLineChart.getXAxis().setTextSize(12f);
+        historyLineChart.getLegend().setTextColor(getResources().getColor(android.R.color.white));
+        historyLineChart.getLegend().setTextSize(15f);
 
         final Bundle loaderBundle = new Bundle();
         loaderBundle.putString(Contract.Quote.COLUMN_SYMBOL, stockName);
@@ -57,24 +71,13 @@ public class HistoryActivity extends AppCompatActivity {
         final Loader loader = getSupportLoaderManager().getLoader(LOADER_HISTORY);
         if (loader == null) {
             getSupportLoaderManager().initLoader(LOADER_HISTORY, loaderBundle, new StockHistoryLoaderCallbacks(this,
-                    historyAdapter));
+                    historyAdapter, historyLineChart, errorTextView));
         } else {
             getSupportLoaderManager().restartLoader(LOADER_HISTORY, loaderBundle, new StockHistoryLoaderCallbacks(this,
-                    historyAdapter));
+                    historyAdapter, historyLineChart, errorTextView));
         }
-        historyAdapter.setHistoryItemList(createMockList());
 
         Timber.d("EXIT onCreate()");
     }
 
-    private List<HistoryItem> createMockList() {
-        final List<HistoryItem> list = new ArrayList<>();
-
-        final HistoryItem item = new HistoryItem();
-        item.setDate(Calendar.getInstance().getTime());
-        item.setClose(new BigDecimal("10"));
-        list.add(item);
-
-        return list;
-    }
 }

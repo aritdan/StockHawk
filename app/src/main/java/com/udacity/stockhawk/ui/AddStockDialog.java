@@ -136,6 +136,8 @@ public class AddStockDialog extends DialogFragment implements ValidationFinished
                 case ErrorCodeConstants.ERR_CODE_STOCK_NOT_EXIST:
                     message = context.getString(R.string.error_stock_not_exist, stockName);
                     break;
+                case ErrorCodeConstants.ERR_CODE_SYMBOL_NOT_ALPHANUMERIC:
+                    message = context.getString(R.string.error_symbol_not_alphanumeric, stockName);
             }
             Toast.makeText(context, message, Toast.LENGTH_LONG).show();
         } else {

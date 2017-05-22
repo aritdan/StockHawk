@@ -5,6 +5,5 @@
     android:minHeight="40dp"
     android:minResizeHeight="250dp"
     android:updatePeriodMillis="3600000"
-    android:widgetCategory="home_screen"
-    android:configure="com.udacity.stockhawk.widget.StockWidgetConfigurationActivity">
+    android:widgetCategory="home_screen">
 </appwidget-provider>

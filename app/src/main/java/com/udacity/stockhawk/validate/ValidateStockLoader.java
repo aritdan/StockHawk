@@ -9,6 +9,8 @@ import com.udacity.stockhawk.constant.ErrorCodeConstants;
 import com.udacity.stockhawk.data.Contract;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
@@ -35,6 +37,12 @@ public class ValidateStockLoader extends AsyncTaskLoader<Integer> {
     @Override
     public Integer loadInBackground() {
 
+        final Pattern pattern = Pattern.compile("[A-Za-z0-9]");
+        final Matcher matcher = pattern.matcher(stockName);
+        if (!matcher.find()) {
+            return ErrorCodeConstants.ERR_CODE_SYMBOL_NOT_ALPHANUMERIC;
+        }
+
         final Cursor cursor = ContentResolverCompat.query(getContext().getContentResolver(),
                 Contract.Quote.URI.buildUpon().appendPath(stockName).build(),
                 null, null, null,
@@ -50,6 +58,8 @@ public class ValidateStockLoader extends AsyncTaskLoader<Integer> {
                 return ErrorCodeConstants.ERR_CODE_STOCK_NOT_EXIST;
             }
         } catch (IOException e) {
+            return ErrorCodeConstants.ERR_GENERIC;
+        } catch (final Exception ex) {
             return ErrorCodeConstants.ERR_GENERIC;
         }
 
