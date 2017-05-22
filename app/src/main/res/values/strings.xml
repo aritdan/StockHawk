@@ -42,8 +42,8 @@
 
     <string name="a11y_add_fab">Add stock</string>
     <string name="a11y_symbol">Stock symbol </string>
-    <string name="a11y_price">Price </string>
-    <string name="a11y_change">Stock change </string>
+    <string name="a11y_price">Price for <xliff:g>%1$s</xliff:g> </string>
+    <string name="a11y_change">Stock change for <xliff:g>%1$s</xliff:g> </string>
     <string name="a11y_stock_name">Stock name </string>
 
     <string name="btn_txt_select">Select stock</string>
