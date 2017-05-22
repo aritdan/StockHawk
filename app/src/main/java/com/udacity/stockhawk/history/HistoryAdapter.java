@@ -46,29 +46,29 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
     @Override
     public HistoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Timber.d("ENTER onCreateViewHolder()");
+        //Timber.d("ENTER onCreateViewHolder()");
         final View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_history_item, parent, false);
 
         final HistoryViewHolder historyViewHolder = new HistoryViewHolder(view);
 
-        Timber.d("EXIT onCreateViewHolder()");
+        //Timber.d("EXIT onCreateViewHolder()");
         return historyViewHolder;
     }
 
     @Override
     public void onBindViewHolder(HistoryViewHolder holder, int position) {
-        Timber.d("ENTER onBindViewHolder() position=[%s]", position);
+        //Timber.d("ENTER onBindViewHolder() position=[%s]", position);
 
         final String histDate = DEFAULT_DATE_FORMAT.format(historyItemList.get(position).getDate());
-        Timber.d("histDate=[%s]", histDate);
+        //Timber.d("histDate=[%s]", histDate);
         holder.histDateTextView.setText(histDate);
 
         final String histClose = DEFAULT_DECIMAL_FORMAT.format(historyItemList.get(position).getClose());
-        Timber.d("histClose=[%s]", histClose);
+        //Timber.d("histClose=[%s]", histClose);
         holder.histCloseTextView.setText(histClose);
 
-        Timber.d("EXIT onBindViewHolder()");
+        //Timber.d("EXIT onBindViewHolder()");
     }
 
     @Override
@@ -86,7 +86,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
         public HistoryViewHolder(View itemView) {
             super(itemView);
-            Timber.d("CREATE HistoryViewHolder");
+            //Timber.d("CREATE HistoryViewHolder");
             ButterKnife.bind(this, itemView);
         }
 

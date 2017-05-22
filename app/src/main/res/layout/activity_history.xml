@@ -14,16 +14,16 @@
         android:layout_height="wrap_content"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
         android:textAlignment="center"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginTop="@dimen/history_title_vertical_margin"
+        android:layout_marginBottom="@dimen/history_title_vertical_margin"
         tools:text="GOOG"/>
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/lc_history"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="@dimen/history_chart_height"
         android:background="@android:color/black"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="@dimen/history_chart_margin_bottom"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_stock_history"

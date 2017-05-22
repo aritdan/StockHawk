@@ -1,3 +1,7 @@
 <resources>
     <dimen name="activity_horizontal_margin">16dp</dimen>
+
+    <dimen name="history_title_vertical_margin">12dp</dimen>
+    <dimen name="history_chart_height">250dp</dimen>
+    <dimen name="history_chart_margin_bottom">8dp</dimen>
 </resources>

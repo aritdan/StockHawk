@@ -59,7 +59,7 @@ public class StockHistoryLoaderCallbacks implements LoaderManager.LoaderCallback
 
     @Override
     public Loader onCreateLoader(int id, Bundle args) {
-        Timber.d("ENTER onCreateLoader()");
+        //Timber.d("ENTER onCreateLoader()");
 
         errorTextView.setVisibility(View.GONE);
 
@@ -71,20 +71,20 @@ public class StockHistoryLoaderCallbacks implements LoaderManager.LoaderCallback
 
         final CursorLoader cursorLoader = new CursorLoader(context,
                 uri, null, null, null, null);
-        Timber.d("EXIT onCreateLoader()");
+        //Timber.d("EXIT onCreateLoader()");
         return cursorLoader;
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        Timber.d("ENTER onLoadFinished()");
+        //Timber.d("ENTER onLoadFinished()");
 
         if (data != null && data.getCount() > 0) {
             data.moveToFirst();
 
             final String symbol = data.getString(Contract.Quote.POSITION_SYMBOL);
             final String history = data.getString(data.getColumnIndex(Contract.Quote.COLUMN_HISTORY));
-            Timber.d("history=[%s]", history);
+            //Timber.d("history=[%s]", history);
 
             if (!Strings.isNullOrEmpty(history)) {
                 final String[] historyLines = history.split("\n");
@@ -97,23 +97,33 @@ public class StockHistoryLoaderCallbacks implements LoaderManager.LoaderCallback
                     final String historyLine = historyLines[i];
                     final HistoryItem historyItem = new HistoryItem();
                     final String[] historyItemData = historyLine.split(",");
-                    Timber.d("historyDateInMillis=[%s], historyClose=[%s]", historyItemData[0], historyItemData[1]);
+                    //Timber.d("historyDateInMillis=[%s], historyClose=[%s]", historyItemData[0], historyItemData[1]);
 
                     final Calendar calendar = Calendar.getInstance();
                     calendar.setTimeInMillis(Long.valueOf(historyItemData[0].trim()));
                     final Date historyDate = calendar.getTime();
-                    Timber.d("historyDate=[%s]", historyDate);
+                    //Timber.d("historyDate=[%s]", historyDate);
 
                     historyItem.setDate(historyDate);
                     historyItem.setClose(new BigDecimal(historyItemData[1].trim()));
 
                     historyItemList.add(historyItem);
+
+                }
+
+                for (int i = historyLines.length - 1; i >= 0; i--) {
+                    final String historyLine = historyLines[i];
+                    final String[] historyItemData = historyLine.split(",");
+
+                    final Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(Long.valueOf(historyItemData[0].trim()));
+                    final Date historyDate = calendar.getTime();
+
                     entryList.add(new Entry(new Long(historyItemData[0].trim()).floatValue(),
                             Float.parseFloat(historyItemData[1].trim())));
 
                     dateLabelList.add(DATE_FORMAT.format(historyDate));
                 }
-
                 final LineDataSet lineDataSet = new LineDataSet(entryList, context.getString(R.string.chart_label));
                 lineDataSet.setColor(context.getResources().getColor(R.color.material_green_700));
                 final LineData lineData = new LineData(lineDataSet);
@@ -138,14 +148,14 @@ public class StockHistoryLoaderCallbacks implements LoaderManager.LoaderCallback
         }
 
 
-        Timber.d("EXIT onLoadFinished()");
+        //Timber.d("EXIT onLoadFinished()");
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        Timber.d("ENTER onLoaderReset()");
+        //Timber.d("ENTER onLoaderReset()");
         historyAdapter.setHistoryItemList(new ArrayList<HistoryItem>());
         errorTextView.setVisibility(View.GONE);
-        Timber.d("EXIT onLoaderReset()");
+        //Timber.d("EXIT onLoaderReset()");
     }
 }

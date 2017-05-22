@@ -83,8 +83,12 @@ public final class QuoteSyncJob {
                 // The request will hang forever X_x
                 StringBuilder historyBuilder = new StringBuilder();
                 try {
-                    List<HistoricalQuote> history = stock.getHistory(from, to, Interval.WEEKLY);
-
+                    //List<HistoricalQuote> history = stock.getHistory(from, to, Interval.WEEKLY);
+                    // Note for reviewer:
+                    // Due to the problems with Yahoo API we have commented the line above
+                    // and included this one to fetch the history from MockUtils
+                    // This should be enough as to develop and review while the API is down
+                    List<HistoricalQuote> history = MockUtils.getHistory();
 
                     for (HistoricalQuote it : history) {
                         historyBuilder.append(it.getDate().getTimeInMillis());

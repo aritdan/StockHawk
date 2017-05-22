@@ -20,7 +20,7 @@ public class StockWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Timber.d("ENTER onUpdate()");
+        //Timber.d("ENTER onUpdate()");
 
         final ComponentName stockWidgetComponentName = new ComponentName(context, StockWidgetProvider.class);
         final int[] widgetIds = appWidgetManager.getAppWidgetIds(stockWidgetComponentName);
@@ -29,13 +29,13 @@ public class StockWidgetProvider extends AppWidgetProvider {
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, widgetIds);
         context.startService(intent);
 
-        Timber.d("EXIT onUpdate()");
+        //Timber.d("EXIT onUpdate()");
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Timber.d("ENTER onReceive()");
+        //Timber.d("ENTER onReceive()");
         super.onReceive(context, intent);
-        Timber.d("EXIT onReceive()");
+        //Timber.d("EXIT onReceive()");
     }
 }

@@ -125,7 +125,7 @@ public class AddStockDialog extends DialogFragment implements ValidationFinished
 
     @Override
     public void onValidationFinished(final int errorCode) {
-        Log.d(TAG, "ENTER onValidationFinished() errorCode=[" + errorCode + "]");
+        //Log.d(TAG, "ENTER onValidationFinished() errorCode=[" + errorCode + "]");
         if (errorCode != -1) {
             String message = context.getString(R.string.error_add_stock);
             final String stockName = stock.getText().toString();
@@ -143,7 +143,7 @@ public class AddStockDialog extends DialogFragment implements ValidationFinished
         } else {
             addStock();
         }
-        Log.d(TAG, "EXIT onValidationFinished()");
+        //Log.d(TAG, "EXIT onValidationFinished()");
     }
 
 

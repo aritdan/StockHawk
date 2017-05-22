@@ -45,7 +45,7 @@ public class HistoryActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Timber.d("ENTER onCreate()");
+        //Timber.d("ENTER onCreate()");
         setContentView(R.layout.activity_history);
         ButterKnife.bind(this);
 
@@ -77,7 +77,7 @@ public class HistoryActivity extends AppCompatActivity {
                     historyAdapter, historyLineChart, errorTextView));
         }
 
-        Timber.d("EXIT onCreate()");
+        //Timber.d("EXIT onCreate()");
     }
 
 }

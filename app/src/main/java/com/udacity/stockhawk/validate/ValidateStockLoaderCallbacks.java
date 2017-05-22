@@ -27,7 +27,7 @@ public class ValidateStockLoaderCallbacks implements LoaderManager.LoaderCallbac
     private ValidationFinishedListener validationFinishedListener;
 
     public ValidateStockLoaderCallbacks(final Context context, final ValidationFinishedListener validationFinishedListener) {
-        Log.d(TAG, "CREATE ValidateStockLoaderCallbacks()");
+        //Log.d(TAG, "CREATE ValidateStockLoaderCallbacks()");
         this.validationFinishedListener = validationFinishedListener;
         this.context = context;
     }
@@ -36,22 +36,22 @@ public class ValidateStockLoaderCallbacks implements LoaderManager.LoaderCallbac
 
     @Override
     public Loader<Integer> onCreateLoader(int id, Bundle args) {
-        Log.d(TAG, "ENTER onCreateLoader() id=[" + id + "], args=[" + args + "]");
+        //Log.d(TAG, "ENTER onCreateLoader() id=[" + id + "], args=[" + args + "]");
         stockName = args.getString(BUNDLE_STOCK_NAME);
         final ValidateStockLoader validateStockLoader = new ValidateStockLoader(context, stockName);
-        Log.d(TAG, "EXIT onCreateLoader()");
+        //Log.d(TAG, "EXIT onCreateLoader()");
         return validateStockLoader;
     }
 
     @Override
     public void onLoadFinished(Loader<Integer> loader, Integer data) {
-        Log.d(TAG, "ENTER onLoadFinished()");
+        //Log.d(TAG, "ENTER onLoadFinished()");
         int errorCode = -1;
         if (data != null && !data.equals(ErrorCodeConstants.ERR_CODE_NO_ERR)) {
             errorCode = data.intValue();
         }
         validationFinishedListener.onValidationFinished(errorCode);
-        Log.d(TAG, "EXIT onLoadFinished()");
+        //Log.d(TAG, "EXIT onLoadFinished()");
     }
 
     @Override

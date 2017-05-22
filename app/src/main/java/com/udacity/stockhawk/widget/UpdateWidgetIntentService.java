@@ -32,23 +32,20 @@ import timber.log.Timber;
 
 public class UpdateWidgetIntentService extends IntentService {
 
-    private static final DecimalFormat dollarFormat = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
-    private static final DecimalFormat percentageFormat = (DecimalFormat) NumberFormat.getPercentInstance(Locale.getDefault());
-
     public UpdateWidgetIntentService() {
         super("UpdateStockWidgetIntentService");
     }
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        Timber.d("ENTER onHandleIntent()");
+        //Timber.d("ENTER onHandleIntent()");
 
         final int[] widgetIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS);
         for (final int widgetId : widgetIds) {
             updateWidget(widgetId);
         }
 
-        Timber.d("EXIT onHandleIntent()");
+        //Timber.d("EXIT onHandleIntent()");
     }
 
     private void updateWidget(final int widgetId) {
